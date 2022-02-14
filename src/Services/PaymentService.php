@@ -818,6 +818,9 @@ class PaymentService
             $paymentData['mop']         = $paymentDetails[0]->mopId;
             $paymentData['tid_status']  = $responseData['tid_status'];
             
+            // Update the transaction status in the database table
+            $this->transactionLogData->updateTransactionData('orderNo', $order->id, $responseData['tid_status']);
+            
             $transactionComments = '';
             if($responseData['tid_status'] == '100') {
                    if (in_array($key, ['27', '41'])) {
