@@ -72,4 +72,24 @@ class TransactionService
         return $order;
     }
     
+    /**
+     * Update the status of the transaction
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @param int $tidStatus
+     *
+     * return none
+     */
+    public function updateTransactionData($key, $value, $tidStatus)
+    {
+        $database = pluginApp(DataBase::class);
+        $orderDetails    = $database->query(TransactionLog::class)->where($key, '=', $value)->get();
+        $order = $orderDetails[0];
+        $additionalInfo = json_decode($order->additionalInfo, true);
+        $additionalInfo['tid_status'] = $tidStatus;
+        $order->additionalInfo = json_encode($additionalInfo);
+        $database->save($order);
+    }
+    
 }
