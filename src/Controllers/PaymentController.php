@@ -198,7 +198,7 @@ class PaymentController extends Controller
                 if(!empty($requestData['nn_reinit'])) {
                     return $this->response->redirectTo(strtolower($serverRequestData['data']['lang']) . '/payment/novalnet/redirectPayment');
                 } else {
-                    return $this->response->redirectTo('place-order');
+                    return $this->response->redirectTo($serverRequestData['data']['lang']) . '/place-order');
                 }
                 
             }
@@ -255,7 +255,7 @@ class PaymentController extends Controller
             return $this->response->redirectTo(strtolower($serverRequestData['data']['lang']) . '/confirmation');
             
         } else {
-            return $this->response->redirectTo('place-order');
+            return $this->response->redirectTo($serverRequestData['data']['lang']) . '/place-order');
         }
     }
 
