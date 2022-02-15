@@ -831,7 +831,7 @@ class PaymentService
             $paymentData['tid_status']  = $responseData['tid_status'];
             
             // Update the transaction status in the database table
-            $this->transactionLogData->updateTransactionData('orderNo', $order->id, $responseData['tid_status']);
+             $orderDetails = $this->transactionLogData->updateTransactionData('tid', $tid, $responseData['tid_status']);
             
             $transactionComments = '';
             if($responseData['tid_status'] == '100') {
