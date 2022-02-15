@@ -1,5 +1,16 @@
 # Informationen zum Novalnet Release
 
+
+## v2.2.3 (2022-02-15)
+
+### Behoben
+
+- Rückerstattung von Gutschriften bei Option "Zahlung neu auslösen"
+- Sprachübersetzung auf der Bestellbestätigungsseite
+- Anzeige des Symbols für die Bestellhistorie
+- Währungsumrechnung bei der Verwendung von Events im Shop-Backend
+- Keine doppelt gebuchten Transaktionen bei Unterbrechung der Datenübertragung
+
 ## v2.2.2 (2021-12-10)
 
 ### Verbessert
