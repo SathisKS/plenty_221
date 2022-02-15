@@ -85,7 +85,7 @@ class RefundEventProcedure
        }
 
        $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);
-       $paymentDetails = $payments->getPaymentsByOrderId($parent_order_id); // Check if it is require
+       $paymentDetails = $payments->getPaymentsByOrderId($parent_order_id);
 
        $orderDetails = $this->transaction->getTransactionData('orderNo', $parent_order_id); // Load all the details for an order
 
@@ -102,10 +102,16 @@ class RefundEventProcedure
 
        $key = $this->paymentService->getkeyByPaymentKey(strtoupper($paymentKey));
         
+       // Get the updated payment details
+       foreach ($paymentDetails as $paymentDetail)
+       {
+            $paymentCurrency = $paymentDetail->currency;
+       }
+        
        // Get the proper order amount even the system currency and payment currency are differ
        if(count($order->amounts) > 1) {
           foreach($order->amounts as $amount) {
-               if($amount->isSystemCurrency == false) {
+               if($paymentCurrency == $amount->currency) {
                    $refundAmount = (float) $amount->invoiceTotal; // Get the refunding amount
                }
           }
