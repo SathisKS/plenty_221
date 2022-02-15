@@ -810,10 +810,17 @@ class PaymentService
          $response = $this->paymentHelper->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URL);
          $responseData =$this->paymentHelper->convertStringToArray($response['response'], '&');
             
+         // Get the updated payment details
+         foreach ($paymentDetails as $paymentDetail)
+         {
+            $paymentCurrency = $paymentDetail->currency;
+            $paymentMopId = $paymentDetail->mopId;
+         }
+            
          // Get the proper order amount even the system currency and payment currency are differ
         if(count($order->amounts) > 1) {
            foreach($order->amounts as $amount) {
-               if($amount->isSystemCurrency == false) {
+               if($paymentCurrency == $amount->currency) {
                    $invoiceAmount = (float) $amount->invoiceTotal;
                }
            }
@@ -822,12 +829,12 @@ class PaymentService
          }
             
          if ($responseData['status'] == '100') {
-            $paymentData['currency']    = $paymentDetails[0]->currency;
+            $paymentData['currency']    = $paymentCurrency;
             $paymentData['paid_amount'] = (float) $invoiceAmount;
             $paymentData['tid']         = $tid;
             $paymentData['order_no']    = $order->id;
             $paymentData['type']        = $responseData['tid_status'] != '100' ? 'cancel' : 'credit';
-            $paymentData['mop']         = $paymentDetails[0]->mopId;
+            $paymentData['mop']         = $paymentMopId;
             $paymentData['tid_status']  = $responseData['tid_status'];
             
             // Update the transaction status in the database table
