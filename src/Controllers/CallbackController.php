@@ -401,7 +401,7 @@ class CallbackController extends Controller
                         $this->paymentHelper->createPlentyPayment($paymentData);
                         $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                         $this->sendCallbackMail($callbackComments);
-                        $this->transaction->updateTransactionData('orderNo', $nnTransactionHistory->orderNo, $this->aryCaptureParams['tid_status']);
+                        $this->transaction->updateTransactionData('tid', $this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status']);
                         return $this->renderTemplate($callbackComments);
                     }
                     else
@@ -460,7 +460,7 @@ class CallbackController extends Controller
                     if (!empty($callbackComments)) {
                      $this->sendCallbackMail($callbackComments); 
                     }
-                    $this->transaction->updateTransactionData('orderNo', $nnTransactionHistory->orderNo, $this->aryCaptureParams['tid_status']);
+                    $this->transaction->updateTransactionData('tid', $this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status']);
                     return $this->renderTemplate($callbackComments);
                 } else {
                     $error = 'Novalnet Callbackscript received. Payment type ( '.$this->aryCaptureParams['payment_type'].' ) is not applicable for this process!';
@@ -471,7 +471,7 @@ class CallbackController extends Controller
                     $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_transaction_cancellation',$orderLanguage),date('d.m.Y'), date('H:i:s') ) . '</br>';
                     $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                     $this->sendCallbackMail($callbackComments);
-                    $this->transaction->updateTransactionData('orderNo', $nnTransactionHistory->orderNo, $this->aryCaptureParams['tid_status']);
+                    $this->transaction->updateTransactionData('tid', $this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status']);
                     return $this->renderTemplate($callbackComments);
                 }
                 else
