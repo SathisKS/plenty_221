@@ -1,5 +1,15 @@
 # Release Notes for Novalnet
 
+## v2.2.3 (2022-02-15)
+
+### Fix
+
+- Credit note refund for reinitiate payment option
+- Language translation handled in the order success page
+- Order History view icon display
+- Currency conversion handled while using events in the shop backend
+- Restricted double booking transaction during communication break
+
 ## v2.2.2 (2021-12-10)
 
 ### Enhanced
